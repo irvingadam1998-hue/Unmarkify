@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useFFmpeg, Region, RemoveMode, QualitySettings, ProcessingStats } from "@/hooks/useFFmpeg";
 import RegionSelector from "@/components/RegionSelector";
@@ -200,6 +200,15 @@ export default function Home() {
   const [stats,      setStats]      = useState<ProcessingStats | null>(null);
 
   const step: Step = !videoInfo ? 1 : !outputUrl ? 2 : 3;
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close menu on outside click
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = () => setMenuOpen(false);
+    document.addEventListener("click", close, { once: true });
+    return () => document.removeEventListener("click", close);
+  }, [menuOpen]);
 
   // Build MODES and PRESETS from translation keys (IDs and icons are fixed)
   const MODES: { id: RemoveMode; icon: string; label: string }[] = MODE_IDS.map((id, i) => ({
@@ -297,6 +306,41 @@ export default function Home() {
         <div className="status-chip">
           <div className="live-dot" />
           {t.status}
+        </div>
+
+        {/* Hamburger — mobile only */}
+        <button
+          className="hamburger"
+          onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}
+          aria-label="Menu"
+        >
+          <span /><span /><span />
+        </button>
+
+        {/* Mobile nav drawer */}
+        <div className={`mobile-nav ${menuOpen ? "open" : ""}`} onClick={e => e.stopPropagation()}>
+          {[
+            { href: "/rotate",  label: t.nav.rotate  },
+            { href: "/trim",    label: t.nav.trim     },
+            { href: "/mute",    label: t.nav.mute     },
+          ].map(l => <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</Link>)}
+          <div className="nav-divider" />
+          {[
+            { href: "/about",   label: t.nav.about   },
+            { href: "/privacy", label: t.nav.privacy  },
+            { href: "/contact", label: t.nav.contact  },
+          ].map(l => <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</Link>)}
+          <div className="nav-divider" />
+          <div style={{ display: "flex", gap: 6, padding: "6px 12px" }}>
+            {(["en", "es"] as const).map(l => (
+              <button key={l} onClick={() => { setLang(l); setMenuOpen(false); }} style={{
+                flex: 1, padding: "8px", borderRadius: 8, border: "1px solid var(--border)",
+                fontSize: 12, fontWeight: 800, cursor: "pointer",
+                background: lang === l ? "var(--black)" : "var(--bg)",
+                color: lang === l ? "#fff" : "var(--muted)",
+              }}>{l.toUpperCase()}</button>
+            ))}
+          </div>
         </div>
       </header>
 
