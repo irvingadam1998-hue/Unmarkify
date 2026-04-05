@@ -9,7 +9,7 @@ export default function VisitCounter() {
 
   useEffect(() => {
     if (!IS_PROD) return; // solo cuenta en producción
-    fetch("https://api.countapi.xyz/hit/unmarkify-app/visitas")
+    fetch("https://countapi.mileshilliard.com/api/v1/hit/unmarkify-app-visitas")
       .then((res) => res.json())
       .then((data) => setCount(data.value))
       .catch(() => {}); // fallo silencioso — no rompe la UI

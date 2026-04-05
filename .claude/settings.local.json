@@ -12,7 +12,8 @@
       "Bash(cp \"C:/Users/Irvin/Documents/watermark-remover/node_modules/@ffmpeg/core-mt/dist/umd/ffmpeg-core.worker.js\" \"C:/Users/Irvin/Documents/watermark-remover/public/ffmpeg/\")",
       "Bash(npx tsc:*)",
       "Bash(node_modules/.bin/tsc --noEmit)",
-      "Bash(node node_modules/next/dist/bin/next build)"
+      "Bash(node node_modules/next/dist/bin/next build)",
+      "WebFetch(domain:countapi.mileshilliard.com)"
     ]
   }
 }
