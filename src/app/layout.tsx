@@ -5,6 +5,10 @@ import { LangProvider } from "@/contexts/LangContext";
 export const metadata: Metadata = {
   title: "Unmarkify – Remove Watermarks from Videos",
   description: "Remove, blur or pixelate watermarks from videos in your browser. No uploads, no servers, 100% private.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
