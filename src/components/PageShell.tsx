@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
+import VisitCounter from "@/components/VisitCounter";
 
 export default function PageShell({ children, active }: { children: React.ReactNode; active?: string }) {
   const { t, lang, setLang } = useLang();
@@ -134,6 +135,7 @@ export default function PageShell({ children, active }: { children: React.ReactN
             <Link key={l.href} href={l.href} style={{ color: "var(--muted)", textDecoration: "none" }}>{l.label}</Link>
           ))}
         </div>
+        <VisitCounter />
         <span>{t.footer.tech}</span>
       </footer>
 

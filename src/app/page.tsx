@@ -6,6 +6,7 @@ import { useFFmpeg, Region, RemoveMode, QualitySettings, ProcessingStats } from 
 import RegionSelector from "@/components/RegionSelector";
 import { useLang } from "@/contexts/LangContext";
 import { Translations } from "@/lib/i18n";
+import VisitCounter from "@/components/VisitCounter";
 
 interface VideoInfo { src: string; file: File; width: number; height: number; }
 type Step = 1 | 2 | 3;
@@ -547,6 +548,7 @@ export default function Home() {
             <Link key={l.href} href={l.href} style={{ color: "var(--muted)", textDecoration: "none", fontSize: 11 }}>{l.label}</Link>
           ))}
         </div>
+        <VisitCounter />
         <span style={{ fontSize: 11 }}>{t.footer.tech}</span>
       </footer>
     </div>
